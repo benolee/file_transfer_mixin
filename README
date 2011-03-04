@@ -23,6 +23,11 @@ class SomeClass
   def some_method
     sftp_send(:some_key, remote_path, local_path)
   end
+
+  # Some method that fetches a file
+  def fetch_method
+    sftp_fetch(:some_key, remote_path, local_path)
+  end
 end
 
 == Motivation ==

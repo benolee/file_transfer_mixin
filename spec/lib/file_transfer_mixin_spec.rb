@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe FileTransferMixin do
   before(:each) do
+    Object.send(:remove_const, :TestFileTransferMixin) if defined?(TestFileTransferMixin)
+
     ENV['FILE_TRANSFER_MIXIN_CONFIG_PATH'] = '/tmp/file_transfer_mixin_enviro_config.yml'
 
     config = {
@@ -14,6 +16,10 @@ describe FileTransferMixin do
     }
     File.open(ENV['FILE_TRANSFER_MIXIN_CONFIG_PATH'], 'w') do |f|
       f.write(YAML.dump(config))
+    end
+
+    class TestFileTransferMixin
+      include FileTransferMixin
     end
   end
 
