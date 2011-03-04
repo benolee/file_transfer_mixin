@@ -1,0 +1,30 @@
+== FileTransferMixin ==
+FileTransferMixin is a module that you can include in a library.  It will support various mechanisms long-term, but
+for now is focused on SFTP servers.
+
+- sftp_send(key, remote_location, local_file_path)
+- sftp_fetch(key, remote_path, local_path)
+
+- It expects an ENV variable named FILE_TRANSFER_MIXIN_CONFIG_PATH to be set.
+- It expects a yml configuration file in FILE_TRANSFER_MIXIN_CONFIG_PATH that looks like the following:
+
+sftp:
+  some_key:
+    server: sftp.matrix.com
+    username: neo
+    password: the_one
+
+Then in a class, you would deal with it thusly:
+
+class SomeClass
+  include FileTransferMixin
+
+  # Some method that uploads a file
+  def some_method
+    sftp_send(:some_key, remote_path, local_path)
+  end
+end
+
+== Motivation ==
+We have quite a few libraries that interact with remote SFTP servers, and inevitably they share massive swathes of code
+that should be unnecessary.  This intends to be a mixin to make the easy things extremely easy.
